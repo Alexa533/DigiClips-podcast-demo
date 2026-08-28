@@ -187,7 +187,7 @@
 
     <!-- Podcast Search Bar Section -->
 
-    <h1 class="page-title">🎙️ Podcast Search - DEMO</h1>
+    <h1 class="page-title">🎙️ Podcast Search - DEMO (UNDER CONSTRUCTION)</h1>
     <a href="index.html">
         <button class="search-btn">LATEST MOCKUP HERE!</button>
     </a> <!-- Navigation to functional demo!-->
@@ -195,8 +195,10 @@
     <div class="basic-search">
 
   <div class="search-wrapper">
-    <input type="text" placeholder="Search podcast segments..." />
+    <form action="/" method = "POST">
+        <input type="text" id = "search_query" name = "search_query" placeholder="Search podcast segments..." />
 
+        <!-- WILL ADD TO THE REST OF FORM SOON... -->
     <select>
       <!-- <option>All Podcasts</option>
       <option>WSJ Podcasts</option> -->
@@ -207,6 +209,9 @@
     <input type="date">
 
     <button class="search-btn">Search</button>
+    </form>
+
+
   </div>
 
 </div>
