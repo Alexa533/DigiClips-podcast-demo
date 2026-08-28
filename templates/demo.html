@@ -6,7 +6,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Podcast Results</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='podcast.search.component.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{{ url_for("static", filename="podcast.search.component.css") }}'>
     <style>
                 .podcast-result {
                     display: flex;
@@ -181,115 +181,74 @@
     <script src='main.js'></script>
 </head>
 <body>
-    <!-- This file will be a snippet of search results for podcasts, listing different (blank) podcasts and
-     its media players(s), as well as their various descriptions and buttons like download, edit, analytics, and transfer.
-     Other buttons on the right side will include Previous and Next (segments), Analytics, Download, Edit, Transfer.-->
-
-    <!-- Podcast Search Bar Section -->
-
     <h1 class="page-title">🎙️ Podcast Search - DEMO (UNDER CONSTRUCTION)</h1>
     <a href="index.html">
         <button class="search-btn">LATEST MOCKUP HERE!</button>
-    </a> <!-- Navigation to functional demo!-->
-
-    <!-- <p>Currently, this version showing the first few podcasts of the current Podcast App Homepage</p> -->
+    </a>
 
     <div class="basic-search">
-
-  <div class="search-wrapper">
-    <form action="/" method = "POST">
-        <input type="text" id = "search_query" name = "search_query" placeholder="Search podcast segments..." />
-
-        <!-- WILL ADD TO THE REST OF FORM SOON... -->
-    <select>
-      <!-- <option>All Podcasts</option>
-      <option>WSJ Podcasts</option> -->
-      <option>Podcast App</option>
-      <!-- <option>Tune In</option> -->
-    </select>
-
-    <input type="date">
-
-    <button class="search-btn">Search</button>
-    </form>
-
-
-  </div>
-
-</div>
-
-    <!-- Podcast Search Results Section (MOCKUP) -->
-<!-- Results Section -->
-<div class="results-section">
-
-<!-- INSERT PREV AND NXT BUTTONS HERE INSTEAD, WITH BOTH ABOVE AND ON EACH SIDE OF THE RESULTS-SECTION BOX -->
-<!-- Previous/Next Navigation Buttons -->
-<div class="results-line-nav">
-    <button class="btn-outline"><a href="undr-constr.html">⬅️ Previous Podcast</button>
-    <button class="btn-outline">Next Podcast ➡️</button>
-</div>
-
-    <!-- Result Card -->
-    <div class="podcast-result">
-
-        <!-- LEFT SIDE -->
-        <div class="podcast-left">
-            <div class ="podcast-image-wrapper">
-                <img
-                    class="podcast-detail-image"
-                    src="podcast-cover.png"
-                    alt="Podcast Image"
-                /> <!-- https://www.vecteezy.com/vector-art/2157610-vector-illustrations-concept-design-podcast-channel -->
-            </div>
-
-            <audio controls class="podcast-player">
-                <source src="#" type="audio/mpeg">
-            </audio>
-
-            <!-- <h3 class="podcast-title"><a href="https://www.wsj.com/podcasts/the-journal/why-french-museums-keep-getting-robbed/e3ff932c-0630-4642-81a1-468646c6e152?mod=audiocenter_search">Why French Museums Keep Getting Robbed</a></h3> -->
-            <h3 class="podcast-title"><a href="https://podcast.app/">TITLE</a></h3>
-
-            <div class="podcast-info">
-                <span>🎙️ Podcast App</span>
-                <span>📅 ??? 00, 0000 - 00:00</span>
-                <span>⏱ 0m 0s</span>
-            </div>
-
-        </div>
-
-        <!-- RIGHT SIDE -->
-        <div class="podcast-right">
-
-            <!-- <div class="results-line-nav">
-                <button class="btn-outline">⬅️ Previous</button>
-                <button class="btn-outline">Next ➡️</button>
-            </div> -->
-
-            <!-- Idea: Moving Title and Info above buttons, but changing buttons spacing -->
-
-
-            <div class="results-line-actions">
-                <!-- <a href="undr-constr.html" class="my-button">Go to About Page</a> -->
-                <!-- <button class="btn-outline"><a href="undr-constr.html">TESTTT</a></button> -->
-                <button class="btn-outline"><a href="undr-constr.html">⬇️ Download Media</a></button>
-                <button class="btn-outline"><a href="undr-constr.html">✏️ Edit Media</a></button>
-                <button class="btn-outline"><a href="undr-constr.html">📊 Media Analytics</a></button>
-                <button class="btn-outline"><a href="https://www.digiclipsproject.com/subscriber/mediatransfer">⇄ Media Transfer</a></button> <!-- https://www.digiclipsproject.com/subscriber/mediatransfer -->
-            </div>
-
-        </div>
+      <div class="search-wrapper">
+        <form action="/" method="POST">
+            <input type="text" id="search_query" name="search_query" placeholder="Search podcast segments..." />
+            <select>
+              <option>Podcast App</option>
+            </select>
+            <input type="date">
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+      </div>
 
     </div>
 
-    <p class="podcast-description">
-        Description...
-                <!-- The daylight heist at the Louvre Museum in October, during which thieves made off
-                with more than $100 million in crown jewels, captured the world's attention. But the
-                theft was just one in a series that have taken place at museums all across France this
-                year. WSJ’s Noemie Bisserbe explains how the wave of heists reveals deep-rooted security
-                vulnerabilities in the country’s hundreds of museums— and raises questions about what it
-                takes to protect national treasures. Jessica Mendoza hosts. -->
-            </p>
-</div>
+    <div class="results-section">
+
+        {% if query %}
+      <p><strong>Saved search query:</strong> {{ query }}</p>
+      {% endif %}
+
+      <div class="results-line-nav">
+          <button class="btn-outline"><a href="undr-constr.html">⬅️ Previous Podcast</a></button>
+          <button class="btn-outline">Next Podcast ➡️</button>
+      </div>
+
+      <div class="podcast-result">
+          <div class="podcast-left">
+              <div class="podcast-image-wrapper">
+                  <img
+                      class="podcast-detail-image"
+                      src="{{ url_for('static', filename='podcast-cover.png') }}"
+                      alt="Podcast Image"
+                  />
+              </div>
+
+              <audio controls class="podcast-player">
+                  <source src="#" type="audio/mpeg">
+              </audio>
+
+              <h3 class="podcast-title"><a href="https://podcast.app/">TITLE</a></h3>
+
+              <div class="podcast-info">
+                  <span>🎙️ Podcast App</span>
+                  <span>📅 ??? 00, 0000 - 00:00</span>
+                  <span>⏱ 0m 0s</span>
+              </div>
+          </div>
+
+          <div class="podcast-right">
+              <div class="results-line-actions">
+                  <button class="btn-outline"><a href="undr-constr.html">⬇️ Download Media</a></button>
+                  <button class="btn-outline"><a href="undr-constr.html">✏️ Edit Media</a></button>
+                  <button class="btn-outline"><a href="undr-constr.html">📊 Media Analytics</a></button>
+                  <button class="btn-outline"><a href="https://www.digiclipsproject.com/subscriber/mediatransfer">⇄ Media Transfer</a></button>
+              </div>
+          </div>
+      </div>
+
+      <p class="podcast-description">
+          Description...
+      </p>
+
+
+    </div>
 </body>
 </html>

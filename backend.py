@@ -1,27 +1,32 @@
 # Alexa Hernandez, python backend for Podcast searching with Podcast App site
+
+# http://127.0.0.1:5000/ when running the Flask app
 from flask import Flask, render_template, request
-from bs4 import BeautifulSoup
-import requests
 
 app = Flask(__name__)
 
-#GET and POST methods for the search page
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        #get data from HTML input
-        query = request.form.get('search_query')
-        # Here,  typically call a function to perform the search
-        # For demonstration, we'll just return the search query
-        # return f"<h1>Search: {query}! Python received your input.</h1>"
-        # print(f"<h1>Search: {query}! Python received your input.</h1>")
-        ### return podcast_app_search('demo.html', query=search_query)
+    query = None
 
-    #if GET request, just show HTML form
-    return render_template('demo.html')
+    if request.method == 'POST':
+        query = request.form.get('search_query')
+        if not query:
+            query = ''
+
+    return render_template('demo.html', query=query)
+
+
+@app.route('/search')
+def search_results():
+    query = request.args.get('q', '')
+    return f"Searching for podcasts related to: {query}"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 def podcast_app_search(query):
     # This function would contain the logic to search for podcasts based on the search_query
