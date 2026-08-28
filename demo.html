@@ -1,0 +1,288 @@
+<!-- Home Page: https://www.digiclipsproject.com/ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Podcast Results</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='podcast.search.component.css'>
+    <style>
+                .podcast-result {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-start;
+                    margin: 16px auto 32px auto;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                    padding: 20px;
+                    max-width: 900px;
+                }
+                .podcast-left {
+                    flex: 1;
+                    min-width: 0;
+                    max-width: 420px;
+                }
+                .podcast-player {
+                    width: 100%;
+                    max-width: 700px;
+                }
+                .podcast-description {
+                    margin-top: 25px;
+                    font-size: 18px;
+                    color: #333;
+                }
+                .podcast-info {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 24px;
+                    margin-top: 8px;
+                    font-size: 16px;
+                    color: #555;
+                }
+                .podcast-info span {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .podcast-right {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-middle; /*flex-end*/
+                    margin-left: 265px;
+                }
+                .results-line-nav {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 12px;
+                    width: 100%;
+                }
+                .results-line-actions {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                }
+        body {
+            background: #f4f4f4;
+        }
+        .search-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 32px 24px;
+            margin: 32px auto 24px auto;
+            max-width: 900px;
+        }
+        .results-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 32px 24px;
+            margin: 0 auto 32px auto;
+            max-width: 900px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            font-size: 15px;
+            border-radius: 10px;
+            margin: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .results-line-actions .btn,
+        .results-line-nav .btn-outline {
+            background-color: #fff;
+            color: #333;
+            border: 2px solid #ccc;
+            padding: 8px 14px;
+            font-size: 15px;
+            border-radius: 8px;
+            margin: 4px;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+            cursor: pointer;
+        }
+        /* Card buttons: match search button shape and hover behavior */
+        .podcast-result button,
+        .podcast-result .results-line-actions .btn,
+        .podcast-result .btn-outline,
+        .podcast-result .seg-btn,
+        .podcast-result .back-to-results-button {
+            padding: 8px 25px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            background: #fff;
+            color: #333;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+        }
+        .podcast-result button:hover,
+        .podcast-result .results-line-actions .btn:hover,
+        .podcast-result .btn-outline:hover,
+        .podcast-result .seg-btn:hover,
+        .podcast-result .back-to-results-button:hover,
+        .results-line-nav .btn-outline:hover {
+            background: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+        /* Center the basic search bar */
+        .basic-search {
+          display: flex;
+          justify-content: center;
+          margin: 16px 0 24px 0;
+        }
+        .basic-search .search-wrapper {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 720px;
+          padding: 6px 8px;
+        }
+        .basic-search .search-wrapper input[type="text"],
+        .basic-search .search-wrapper select,
+        .basic-search .search-wrapper input[type="date"] {
+          padding: 8px 12px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          font-size: 15px;
+        }
+        .basic-search .search-wrapper .search-btn {
+          padding: 8px 14px;
+          border-radius: 8px;
+          border: none;
+          background: #007bff;
+          color: #fff;
+          cursor: pointer;
+        }
+        .basic-search .search-wrapper .search-btn:hover {
+          background: #0056b3;
+        }
+                /* Page title */
+                .page-title {
+                        text-align: center;
+                        font-size: 32px;
+                        font-weight: 600;
+                        margin: 18px 0 10px 0;
+                        color: #222;
+                }
+    </style>
+    <script src='main.js'></script>
+</head>
+<body>
+    <!-- This file will be a snippet of search results for podcasts, listing different (blank) podcasts and
+     its media players(s), as well as their various descriptions and buttons like download, edit, analytics, and transfer.
+     Other buttons on the right side will include Previous and Next (segments), Analytics, Download, Edit, Transfer.-->
+
+    <!-- Podcast Search Bar Section -->
+
+    <h1 class="page-title">🎙️ Podcast Search - DEMO</h1>
+    <a href="index.html">
+        <button class="search-btn">LATEST MOCKUP HERE!</button>
+    </a> <!-- Navigation to functional demo!-->
+
+    <div class="basic-search">
+
+  <div class="search-wrapper">
+    <input type="text" placeholder="Search podcast segments..." />
+
+    <select>
+      <!-- <option>All Podcasts</option>
+      <option>WSJ Podcasts</option> -->
+      <option>Podcast App</option>
+      <!-- <option>Tune In</option> -->
+    </select>
+
+    <input type="date">
+
+    <button class="search-btn">Search</button>
+  </div>
+
+</div>
+
+    <!-- Podcast Search Results Section (MOCKUP) -->
+<!-- Results Section -->
+<div class="results-section">
+
+<!-- INSERT PREV AND NXT BUTTONS HERE INSTEAD, WITH BOTH ABOVE AND ON EACH SIDE OF THE RESULTS-SECTION BOX -->
+<!-- Previous/Next Navigation Buttons -->
+<div class="results-line-nav">
+    <button class="btn-outline"><a href="undr-constr.html">⬅️ Previous Podcast</button>
+    <button class="btn-outline">Next Podcast ➡️</button>
+</div>
+
+    <!-- Result Card -->
+    <div class="podcast-result">
+
+        <!-- LEFT SIDE -->
+        <div class="podcast-left">
+            <div class ="podcast-image-wrapper">
+                <img
+                    class="podcast-detail-image"
+                    src="podcast-cover.png"
+                    alt="Podcast Image"
+                /> <!-- https://www.vecteezy.com/vector-art/2157610-vector-illustrations-concept-design-podcast-channel -->
+            </div>
+
+            <audio controls class="podcast-player">
+                <source src="#" type="audio/mpeg">
+            </audio>
+
+            <!-- <h3 class="podcast-title"><a href="https://www.wsj.com/podcasts/the-journal/why-french-museums-keep-getting-robbed/e3ff932c-0630-4642-81a1-468646c6e152?mod=audiocenter_search">Why French Museums Keep Getting Robbed</a></h3> -->
+            <h3 class="podcast-title"><a href="https://podcast.app/">TITLE</a></h3>
+
+            <div class="podcast-info">
+                <span>🎙️ Podcast App</span>
+                <span>📅 ??? 00, 0000 - 00:00</span>
+                <span>⏱ 0m 0s</span>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="podcast-right">
+
+            <!-- <div class="results-line-nav">
+                <button class="btn-outline">⬅️ Previous</button>
+                <button class="btn-outline">Next ➡️</button>
+            </div> -->
+
+            <!-- Idea: Moving Title and Info above buttons, but changing buttons spacing -->
+
+
+            <div class="results-line-actions">
+                <!-- <a href="undr-constr.html" class="my-button">Go to About Page</a> -->
+                <!-- <button class="btn-outline"><a href="undr-constr.html">TESTTT</a></button> -->
+                <button class="btn-outline"><a href="undr-constr.html">⬇️ Download Media</a></button>
+                <button class="btn-outline"><a href="undr-constr.html">✏️ Edit Media</a></button>
+                <button class="btn-outline"><a href="undr-constr.html">📊 Media Analytics</a></button>
+                <button class="btn-outline"><a href="https://www.digiclipsproject.com/subscriber/mediatransfer">⇄ Media Transfer</a></button> <!-- https://www.digiclipsproject.com/subscriber/mediatransfer -->
+            </div>
+
+        </div>
+
+    </div>
+
+    <p class="podcast-description">
+        Description...
+                <!-- The daylight heist at the Louvre Museum in October, during which thieves made off
+                with more than $100 million in crown jewels, captured the world's attention. But the
+                theft was just one in a series that have taken place at museums all across France this
+                year. WSJ’s Noemie Bisserbe explains how the wave of heists reveals deep-rooted security
+                vulnerabilities in the country’s hundreds of museums— and raises questions about what it
+                takes to protect national treasures. Jessica Mendoza hosts. -->
+            </p>
+</div>
+</body>
+</html>
