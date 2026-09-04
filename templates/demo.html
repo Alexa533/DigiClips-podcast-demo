@@ -6,7 +6,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Podcast Results</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='{{ url_for("static", filename="podcast.search.component.css") }}'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../podcast.search.component.css'>
     <style>
                 .podcast-result {
                     display: flex;
@@ -213,10 +213,11 @@
 
       <div class="podcast-result">
           <div class="podcast-left">
+            <!-- src="{{ url_for('static', filename='podcast-cover.png') }}" -->
               <div class="podcast-image-wrapper">
                   <img
                       class="podcast-detail-image"
-                      src="{{ url_for('static', filename='podcast-cover.png') }}"
+                      src="../podcast-cover.png"
                       alt="Podcast Image"
                   />
               </div>
@@ -225,10 +226,13 @@
                   <source src="#" type="audio/mpeg">
               </audio>
 
+              <!-- PLACEHOLDER - REPLACE TITLE AND ITS LINK WITH JS TITLE AND LINK -->
               <h3 class="podcast-title"><a href="https://podcast.app/">TITLE</a></h3>
 
+              <!-- PLACEHOLDERS - REPLACE SOURSE, AND INFORMATION ON DATE/TIME/DURATION IF POSSIBLE, IF NOT, LEAVE FOR NOW -->
               <div class="podcast-info">
-                  <span>🎙️ Podcast App</span>
+                  <span>🎙️ Podcast App
+                  </span>
                   <span>📅 ??? 00, 0000 - 00:00</span>
                   <span>⏱ 0m 0s</span>
               </div>
@@ -244,6 +248,7 @@
           </div>
       </div>
 
+      <!-- PLACEHOLDER - REPLACE DESCRIPTION WITH JS DESCRIPTION, IF POSSIBLE. IF NOT, LEAVE FOR NOW -->
       <p class="podcast-description">
           Description...
       </p>
