@@ -1,0 +1,358 @@
+<!-- ASU_11_Fall 2025 Branch -->
+<!-- Alexa Hernandez -->
+<!-- Description: This is a draft for the General User's UI of the Podcast Search Results page where there will be data from our website imported, once it is available to be done. -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Podcast Results</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='podcast.search.component.css'>
+    <style>
+                .podcast-result {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-start;
+                    margin: 16px auto 32px auto;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                    padding: 20px;
+                    max-width: 900px;
+                }
+                .podcast-left {
+                    flex: 1;
+                    min-width: 0;
+                    max-width: 420px;
+                }
+                .podcast-player {
+                    width: 100%;
+                    max-width: 700px;
+                }
+                .podcast-description {
+                    margin-top: 25px;
+                    font-size: 18px;
+                    color: #333;
+                }
+                .podcast-info {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 24px;
+                    margin-top: 8px;
+                    font-size: 16px;
+                    color: #555;
+                }
+                .podcast-info span {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .podcast-right {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-middle; /*flex-end*//*flex-middle, but too long for lower buttons*/
+                    margin-left: 265px;
+                }
+                .results-line-nav {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 12px;
+                    margin-bottom: 12px;
+                }
+                .results-line-actions {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                }
+        body {
+            background: #f4f4f4;
+        }
+        .search-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 32px 24px;
+            margin: 32px auto 24px auto;
+            max-width: 900px;
+        }
+        .results-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 32px 24px;
+            margin: 0 auto 32px auto;
+            max-width: 900px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            font-size: 15px;
+            border-radius: 10px;
+            margin: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .results-line-actions .btn {
+            background-color: #fff;
+            color: #333;
+            border: 2px solid #ccc;
+            padding: 8px 14px;
+            font-size: 15px;
+            border-radius: 8px;
+            margin: 4px;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+            cursor: pointer;
+        }
+        /* Card buttons: match search button shape and hover behavior */
+        .podcast-result button,
+        .podcast-result .results-line-actions .btn,
+        .podcast-result .btn-outline,
+        .podcast-result .seg-btn,
+        .podcast-result .back-to-results-button {
+            padding: 8px 25px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            background: #fff;
+            color: #333;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+        }
+        .podcast-result button:hover,
+        .podcast-result .results-line-actions .btn:hover,
+        .podcast-result .btn-outline:hover,
+        .podcast-result .seg-btn:hover,
+        .podcast-result .back-to-results-button:hover {
+            background: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+        /* Center the basic search bar */
+        .basic-search {
+          display: flex;
+          justify-content: center;
+          margin: 16px 0 24px 0;
+        }
+        .basic-search .search-wrapper {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 720px;
+          padding: 6px 8px;
+        }
+        .basic-search .search-wrapper input[type="text"],
+        .basic-search .search-wrapper select,
+        .basic-search .search-wrapper input[type="date"] {
+          padding: 8px 12px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          font-size: 15px;
+        }
+        .basic-search .search-wrapper .search-btn {
+          padding: 8px 14px;
+          border-radius: 8px;
+          border: none;
+          background: #007bff;
+          color: #fff;
+          cursor: pointer;
+        }
+        .basic-search .search-wrapper .search-btn:hover {
+          background: #0056b3;
+        }
+                /* Page title */
+                .page-title {
+                        text-align: center;
+                        font-size: 32px;
+                        font-weight: 600;
+                        margin: 18px 0 10px 0;
+                        color: #222;
+                }
+    </style>
+    <script src='main.js'></script>
+</head>
+<body>
+    <!-- This file will be a snippet of search results for podcasts, listing different (blank) podcasts and
+     its media players(s), as well as their various descriptions and buttons like download, edit, analytics, and transfer.
+     Other buttons on the right side will include Previous and Next (segments), Analytics, Download, Edit, Transfer.-->
+
+    <!-- Podcast Search Bar Section -->
+
+    <h1 class="page-title">🎙️ Podcast Search</h1>
+
+    <div class="basic-search">
+
+  <div class="search-wrapper">
+    <input type="text" placeholder="Search podcast segments..." />
+
+    <select>
+      <option>All Podcasts</option>
+      <option>Type I</option>
+      <option>Type II</option>
+      <option>Type III</option>
+    </select>
+
+    <input type="date">
+
+    <button class="search-btn">Search</button>
+  </div>
+
+</div>
+
+    <!-- Podcast Search Results Section (Rough Draft) -->
+<!-- Results Section -->
+<div class="results-section">
+
+    <!-- Result Card -->
+    <div class="podcast-result">
+
+        <!-- LEFT SIDE -->
+        <div class="podcast-left">
+            <h3 class="podcast-title"><a href="https://www.wsj.com/podcasts/the-journal/why-french-museums-keep-getting-robbed/e3ff932c-0630-4642-81a1-468646c6e152?mod=audiocenter_search">Why French Museums Keep Getting Robbed</a></h3>
+
+            <div class="podcast-info">
+                <span>🎙️ WSJ Podcasts</span>
+                <span>📅 Nov 17, 2025 - 13:00</span>
+                <span>⏱ 14m 56s</span>
+            </div>
+
+            <p class="podcast-description">
+                The daylight heist at the Louvre Museum in October, during which thieves made off
+                with more than $100 million in crown jewels, captured the world's attention. But the
+                theft was just one in a series that have taken place at museums all across France this
+                year. WSJ’s Noemie Bisserbe explains how the wave of heists reveals deep-rooted security
+                vulnerabilities in the country’s hundreds of museums— and raises questions about what it
+                takes to protect national treasures. Jessica Mendoza hosts.
+            </p>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="podcast-right">
+
+            <audio controls class="podcast-player">
+                <source src="#" type="audio/mpeg">
+            </audio>
+
+            <div class="results-line-nav">
+                <button class="btn-outline">⬅️ Previous</button>
+                <button class="btn-outline">Next ➡️</button>
+            </div>
+
+            <div class="results-line-actions">
+                <!-- <button class="btn-outline">⬇️ Download</button>
+                <button class="btn-outline">✏️ Edit</button>
+                <button class="btn-outline">📊 Analytics</button>
+                <button class="btn-outline">⇄ Transfer</button> -->
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+    <div class="podcast-result">
+
+        <!-- LEFT SIDE -->
+        <div class="podcast-left">
+            <h3 class="podcast-title"><a href="https://podcast.app/ai-whistleblower-we-are-being-gaslit-by-the-ai-companies-theyre-hiding-the-truth-about-ai-e448859268">AI Whistleblower: We Are Being Gaslit By The AI Companies! They’re Hiding The Truth About AI</a></h3>
+
+            <div class="podcast-info">
+                <span>🎙️ Podcast App</span>
+                <span>📅 Mar 25, 2026</span>
+                <span>⏱ 2hr 8m</span>
+            </div>
+
+            <!-- INSERT DROPDOWN FOR TEXT -->
+            <p class="podcast-description">
+              The truth about Sam Altman. AI Critic Karen Hao reveals what 90 OpenAI employees told her.
+                Karen Hao is an AI expert, award-winning investigative journalist, and former reporter
+                for The Wall Street Journal covering American and Chinese tech companies. She is also
+                co-host of the podcast The Interface and freelances for publications like More Perfect
+                Union and The Atlantic. Her latest book is the bestselling ‘EMPIRE OF AI: Inside The
+                Reckless Race For Total Domination.’
+              <!-- NEW LINE -->
+                <!-- <br><br> -->
+            </p>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="podcast-right">
+
+            <audio controls class="podcast-player">
+                <source src="#" type="audio/mpeg">
+            </audio>
+
+            <div class="results-line-nav">
+                <button class="btn-outline">⬅️ Previous</button>
+                <button class="btn-outline">Next ➡️</button>
+            </div>
+
+            <div class="results-line-actions">
+                <!-- <button class="btn-outline">⬇️ Download</button>
+                <button class="btn-outline">✏️ Edit</button>
+                <button class="btn-outline">📊 Analytics</button>
+                <button class="btn-outline">⇄ Transfer</button> -->
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="podcast-result">
+
+        <!-- LEFT SIDE -->
+        <div class="podcast-left">
+            <h3 class="podcast-title"><a href="https://tunein.com/podcasts/Business--Economics-Podcasts/The-Healthy-Business-Podcast-with-Tony-DeSimone-p2672366/?topicId=438319925">Musk vs. OpenAI: Elon suing to halt OpenAI's transition to a for-profit</a></h3>
+
+            <div class="podcast-info">
+                <span>🎙️ Tune In</span>
+                <span>📅 Dec 4, 2024 - 09:10</span>
+                <span>⏱ 15m 21s</span>
+            </div>
+
+            <p class="podcast-description">
+              OpenAI is facing significant legal challenges. Elon Musk is seeking an injunction to halt
+              OpenAI's transition to a for-profit model and alleges anti-competitive practices with
+              Microsoft. Separately, Canadian news organizations are suing OpenAI for allegedly using their
+              copyrighted material to train its AI models. These lawsuits could drastically impact OpenAI's
+              future, its partnerships, and the broader AI industry's practices regarding data usage and
+              competition. The cases raise crucial questions about AI development, copyright, and the ethical
+              implications of for-profit AI companies.
+            </p>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="podcast-right">
+
+            <audio controls class="podcast-player">
+                <source src="#" type="audio/mpeg">
+            </audio>
+
+            <div class="results-line-nav">
+                <button class="btn-outline">⬅️ Previous</button>
+                <button class="btn-outline">Next ➡️</button>
+            </div>
+
+            <div class="results-line-actions">
+                <!-- <button class="btn-outline">⬇️ Download</button>
+                <button class="btn-outline">✏️ Edit</button>
+                <button class="btn-outline">📊 Analytics</button>
+                <button class="btn-outline">⇄ Transfer</button> -->
+                <!-- media transfer -->
+            </div>
+
+        </div>
+    </div>
+
+
+
+</body>
+</html>
