@@ -41,7 +41,7 @@ async function scrapeWSJ() {
  * 2. Podcast App Shows
  * Targets list layouts natively formatted for directories.
  */
-async function scrapePodcastApp() {
+export async function scrapePodcastApp() {
   try {
     const { data } = await axios.get('https://podcast.app/shows', { headers: HEADERS });
     const $ = cheerio.load(data);
@@ -109,14 +109,7 @@ async function scrapeTuneIn() {
 
 // Master Aggregator Function
 export async function scrapeAllPodcasts() {
-  const results = await Promise.all([
-    scrapeWSJ(),
-    scrapePodcastApp(),
-    scrapeTuneIn()
-  ]);
-
-  // Combines the memory-stored arrays into a single stream to return
-  return results.flat();
+  return scrapePodcastApp();
 }
 
 // print the contents of scrapeWSJ, scrapePodcastApp, and scrapeTuneIn to the console for testing - individually call each function and log the results

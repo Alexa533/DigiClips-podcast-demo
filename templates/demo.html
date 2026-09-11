@@ -178,7 +178,7 @@
                         color: #222;
                 }
     </style>
-    <script src='main.js'></script>
+    <script src='../podcast-client.js' defer></script>
 </head>
 <body>
     <h1 class="page-title">🎙️ Podcast Search - DEMO (UNDER CONSTRUCTION)</h1>
@@ -200,11 +200,12 @@
 
     </div>
 
+    <div id="results-container">
     <div class="results-section">
 
-        {% if query %}
+        <!-- {% if query %}
       <p><strong>Saved search query:</strong> {{ query }}</p>
-      {% endif %}
+      {% endif %} -->
 
       <div class="results-line-nav">
           <button class="btn-outline"><a href="undr-constr.html">⬅️ Previous Podcast</a></button>
@@ -254,6 +255,7 @@
       </p>
 
 
+    </div>
     </div>
 </body>
 </html>
