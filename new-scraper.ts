@@ -1,4 +1,5 @@
 // Converted the scraper.js to TypeScript...
+// This file will be the new backend scraper for the podcast demo project. It will scrape multiple sources and when prompted, return a unified data structure.
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
