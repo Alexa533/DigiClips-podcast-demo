@@ -115,8 +115,8 @@ async function scrapeTuneIn(): Promise<PodcastItem[]> {
  */
 export async function scrapeAllPodcasts(): Promise<PodcastItem[]> {
   const results = await Promise.all([
-    // scrapeWSJ(), //FAILS
-    scrapePodcastApp(), //works!
+    scrapeWSJ(), //FAILS
+    // scrapePodcastApp(), //works!
     // scrapeTuneIn() //works!
   ]);
 
@@ -124,4 +124,4 @@ export async function scrapeAllPodcasts(): Promise<PodcastItem[]> {
 }
 
 scrapeAllPodcasts().then(console.log);
-//running: npx tsx new.scraper.ts
+//running: npx tsx new-scraper.ts
