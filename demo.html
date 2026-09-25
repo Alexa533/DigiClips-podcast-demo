@@ -178,7 +178,7 @@
                         color: #222;
                 }
     </style>
-    <script src='podcast-client.js' defer></script>
+    <script src='new-scraper.ts' defer></script>
 </head>
 <body>
     <!-- This file will be a snippet of search results for podcasts, listing different (blank) podcasts and
@@ -197,8 +197,9 @@
     <div class="basic-search">
 
   <div class="search-wrapper">
-    <form action="/" method = "POST">
-        <input type="text" id = "search_query" name = "search_query" placeholder="Search podcast segments..." />
+    <!-- <form action="/" method = "POST"> -->
+    <form id="podcast-search-form" action="">
+        <input type="text" id="search_query" name="search_query" placeholder="Search podcast segments..." />
 
         <!-- WILL ADD TO THE REST OF FORM SOON... -->
     <select>
@@ -210,7 +211,7 @@
 
     <input type="date">
 
-    <button class="search-btn">Search</button>
+    <button type="submit" class="search-btn">Search</button>
     </form>
 
 
@@ -249,6 +250,8 @@
 
             <!-- <h3 class="podcast-title"><a href="https://www.wsj.com/podcasts/the-journal/why-french-museums-keep-getting-robbed/e3ff932c-0630-4642-81a1-468646c6e152?mod=audiocenter_search">Why French Museums Keep Getting Robbed</a></h3> -->
             <h3 class="podcast-title"><a href="https://podcast.app/">TITLE</a></h3>
+            <!-- to be filled with title, scraped from new-scraper.ts -->
+             <!-- will have link that is scraped as well -->
 
             <div class="podcast-info">
                 <span>🎙️ Podcast App</span>
@@ -291,6 +294,7 @@
                 vulnerabilities in the country’s hundreds of museums— and raises questions about what it
                 takes to protect national treasures. Jessica Mendoza hosts. -->
             </p>
+            <!-- to be filled with description, scraped from new-scraper.ts -->
 </div>
 </div>
 </body>

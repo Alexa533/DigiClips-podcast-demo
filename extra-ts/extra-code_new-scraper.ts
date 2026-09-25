@@ -17,6 +17,48 @@ const HEADERS = {
   'Accept-Language': 'en-US,en;q=0.9'
 };
 
+const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+
+export function getSearchQuery(): string {
+  if (!isBrowser) return '';
+
+  const input = document.getElementById('search_query') as HTMLInputElement | null;
+  return input?.value.trim() ?? '';
+}
+
+function matchesQuery(item: PodcastItem, query: string): boolean {
+  if (!query) return true;
+
+  const haystack = `${item.title} ${item.description} ${item.source}`.toLowerCase();
+  return haystack.includes(query.toLowerCase());
+}
+
+function updatePodcastCard(item: PodcastItem | null): void {
+  if (!isBrowser) return;
+
+  const titleLink = document.querySelector('.podcast-title a') as HTMLAnchorElement | null;
+  const sourceInfo = document.querySelector('.podcast-info span:first-child') as HTMLElement | null;
+  const descriptionEl = document.querySelector('.podcast-description') as HTMLElement | null;
+
+  if (!titleLink || !sourceInfo || !descriptionEl) return;
+
+  if (!item) {
+    titleLink.textContent = 'No podcasts found';
+    titleLink.href = '#';
+    sourceInfo.textContent = '🎙️ No results';
+    descriptionEl.textContent = 'Try another search term.';
+    return;
+  }
+
+  titleLink.textContent = item.title || 'Untitled podcast';
+  titleLink.href = item.link || '#';
+  titleLink.target = item.link ? '_blank' : '';
+  titleLink.rel = item.link ? 'noopener noreferrer' : '';
+
+  sourceInfo.textContent = `🎙️ ${item.source}`;
+  descriptionEl.textContent = item.description || 'No description available.';
+}
+
 /**
  * 1. Wall Street Journal Audio/Podcasts
  */
@@ -35,7 +77,6 @@ async function scrapeWSJ(): Promise<PodcastItem[]> {
       if (!title || !link) return null;
       return { source: 'WSJ', title, link, description };
     }).get().filter((item): item is PodcastItem => item !== null);
-
   } catch (error) {
     console.error('WSJ Scraping failed:', error instanceof Error ? error.message : error);
     return [];
@@ -69,7 +110,6 @@ async function scrapePodcastApp(): Promise<PodcastItem[]> {
       if (!title || !link) return null;
       return { source: 'PodcastApp', title, link, description };
     }).get().filter((item): item is PodcastItem => item !== null);
-
   } catch (error) {
     console.error('PodcastApp Scraping failed:', error instanceof Error ? error.message : error);
     return [];
@@ -103,7 +143,6 @@ async function scrapeTuneIn(): Promise<PodcastItem[]> {
       if (!title || !link) return null;
       return { source: 'TuneIn', title, link, description };
     }).get().filter((item): item is PodcastItem => item !== null);
-
   } catch (error) {
     console.error('TuneIn Scraping failed:', error instanceof Error ? error.message : error);
     return [];
@@ -113,15 +152,51 @@ async function scrapeTuneIn(): Promise<PodcastItem[]> {
 /**
  * Master Aggregator Function
  */
-export async function scrapeAllPodcasts(): Promise<PodcastItem[]> {
+export async function scrapeAllPodcasts(searchTerm = ''): Promise<PodcastItem[]> {
   const results = await Promise.all([
-    // scrapeWSJ(), //FAILS
-    scrapePodcastApp(), //works!
-    // scrapeTuneIn() //works!
+    scrapeWSJ(),
+    scrapePodcastApp(),
+    scrapeTuneIn()
   ]);
 
-  return results.flat();
+  const allResults = results.flat();
+  const query = searchTerm.trim();
+
+  if (!query) return allResults;
+
+  return allResults.filter((item) => matchesQuery(item, query));
 }
 
-scrapeAllPodcasts().then(console.log);
-//running: npx tsx new-scraper.ts
+export async function loadPodcastResults(): Promise<PodcastItem[]> {
+  const query = getSearchQuery();
+  const items = await scrapeAllPodcasts(query);
+
+  if (isBrowser) {
+    updatePodcastCard(items[0] ?? null);
+  }
+
+  return items;
+}
+
+function bindPodcastSearch(): void {
+  if (!isBrowser) return;
+
+  const form = document.querySelector('.basic-search form') as HTMLFormElement | null;
+  if (!form) return;
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    await loadPodcastResults();
+  });
+}
+
+if (isBrowser) {
+  document.addEventListener('DOMContentLoaded', () => {
+    bindPodcastSearch();
+    void loadPodcastResults();
+  });
+}
+
+// KEEP THESE COMMENTS BELOW
+// run: npx tsx new-scraper.ts
+// <script type="module" src="dist/script_name_here.js"></script> - to run specific script
