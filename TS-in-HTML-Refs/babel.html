@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live TypeScript in HTML</title>
+
+    <!-- 1. Load the Babel Standalone compiler -->
+    <script src="https://unpkg.com"></script>
+</head>
+<body>
+
+    <h1>TypeScript Running in Browser</h1>
+    <div id="output"></div>
+
+    <!-- 2. Write your TypeScript inside a text/babel script block -->
+    <script type="text/babel" data-presets="typescript">
+        // TypeScript Interface
+        // interface User {
+        //     firstName: string;
+        //     lastName: string;
+        // }
+
+        // // TypeScript Typed Function
+        // function greetUser(user: User): string {
+        //     return `Hello, ${user.firstName} ${user.lastName}! This is running live TypeScript.`;
+        // }
+
+        // const activeUser: User = {
+        //     firstName: "Jane",
+        //     lastName: "Doe"
+        // };
+
+        // Outputting to the HTML page
+        document.getElementById("output").innerText = greetUser(activeUser);
+    </script>
+
+</body>
+</html>

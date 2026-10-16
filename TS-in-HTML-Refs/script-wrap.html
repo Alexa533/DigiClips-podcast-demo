@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official TS Browser Compiler</title>
+
+    <!-- Load the browser-ready TypeScript compiler -->
+    <script src="https://unpkg.com"></script>
+</head>
+<body>
+
+    <h1>Official TS Engine Example</h1>
+    <div id="log"></div>
+
+    <!-- Mark the script type as text/typescript -->
+    <script type="text/typescript">
+        const Framework: string = "TypeScript";
+        const versions: number[] = [4, 5, 6];
+
+        document.getElementById("log").innerHTML = `Compiled using <b>${Framework}</b> inside the browser!`;
+    </script>
+
+    <!-- This inline helper script tells the compiler to look for and execute text/typescript blocks -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const scripts = document.querySelectorAll('script[type="text/typescript"]');
+            scripts.forEach(script => {
+                // Transpile TS code to plain JavaScript string
+                const jsCode = window.ts.transpile(script.textContent);
+                // Execute the generated JavaScript
+                const outputScript = document.createElement('script');
+                outputScript.textContent = jsCode;
+                document.body.appendChild(outputScript);
+            });
+        });
+    </script>
+
+</body>
+</html>
