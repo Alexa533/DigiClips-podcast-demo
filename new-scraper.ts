@@ -26,6 +26,14 @@ async function scrapeWSJ(): Promise<PodcastItem[]> {
     const $ = cheerio.load(data);
 
     return $('article, .wsj-podcast-item, [class*="podcast"]').map((_, el): PodcastItem | null => {
+    //   let title = '';
+    //   let id = ''; //??
+    //   let source = ''; //??
+    //   let link = ''; //url - good.
+    //   let mediaURL = ''; //??
+    //   let imageURL = ''; //
+    //   let platform = 'WSJ Podcasts';
+
         // FOR TITLE: <p title="Title Example" data-testid="audio-card-headline" class="css-uzzmod">Title Example</p>
       const titleLink = $(el).find('h3 a, a[href*="/podcasts/"]');
       const title = titleLink.text().trim();
@@ -57,7 +65,13 @@ async function scrapePodcastApp(): Promise<PodcastItem[]> {
 
     return $('a[href*="/shows/"], .show-card, li').map((_, el): PodcastItem | null => {
       let title = '';
-      let link = '';
+      let id = ''; //??
+      let source = ''; //??
+      let link = ''; //url - good.
+      let mediaURL = ''; //??
+      let imageURL = ''; //<img src="https://podcast-api-images.s3.amazonaws.com/corona/show/5178/logo_300x300.jpeg" alt="Join Us in France Travel Podcast" class="absolute left-0 top-0 w-full rounded-xl p-2">
+      let platform = 'PodcastApp';
+
 
       if ($(el).is('a')) {
         title = $(el).text().trim();
@@ -96,7 +110,12 @@ async function scrapeTuneIn(): Promise<PodcastItem[]> {
 
     return $('[class*="guideitem"], [class*="card"], a[href*="/podcasts/"]').map((_, el): PodcastItem | null => {
       let title = '';
-      let link = '';
+      let id = ''; //??
+      let source = ''; //??
+      let link = ''; //url - good.
+      let mediaURL = ''; //
+      let imageURL = ''; //?? -> <a data-testid="guideItemLink" class="Link-module__link___njbxO play-button-module__surface___RVgCy guide-item-module__guideItemPlayButtonContainer___qQPrS guide-item-module__guideItemLink___jBNja common-module__link___I7lvk" href="/podcasts/Automotive/Cars--Water-p2879404/">...>  ->  <img data-testid="logo" class="imageWithDefault-module__image___tPMiE profile-logo-module__logoImage___Z9blm" src="https://cdn-profiles.tunein.com/p2879404/images/logod.png?t=638039225520000000"...>
+      let platform = 'TuneIn';
 
       if ($(el).is('a')) {
         title = $(el).attr('title') || $(el).text().trim();
@@ -135,3 +154,12 @@ export async function scrapeAllPodcasts(): Promise<PodcastItem[]> {
 
 scrapeAllPodcasts().then(console.log);
 //running: npx tsx new-scraper.ts
+
+
+// NOTE:
+// REMOVE ALL HTML CODE
+// Prepare for conversion to JS
+// Make as simple as possible, for arrays and scraping!!
+
+// IDEAS:
+// For Podcasr App and TuneIn, have the scraper go into the link and scrape the description from there, instead of trying to get it from the search results page.
